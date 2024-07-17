@@ -1,0 +1,21 @@
+name: Wiki index
+
+on:
+  gollum:
+  workflow_dispatch:
+
+env:
+  GIT_AUTHOR_NAME: Actionbot
+  GIT_AUTHOR_EMAIL: actions@github.com
+
+jobs:
+  update-wiki-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout wiki repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki.git
+      - name: Create sidebar index
+        run: |
+          find . -type f -path '*.md' -not -path '*/[._]*' -exec echo {} \;
